@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="26" height="26" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="landform" tilewidth="16" tileheight="16">
+  <image source="landform/landform.png" trans="000000" width="96" height="96"/>
+ </tileset>
+ <layer name="layer_0" width="26" height="26">
+  <data encoding="base64" compression="zlib">
+   eJzdlFELgzAMhKvgFKaDzYH7/7/U9KFQDtI09urDDvJwxIbvamgI/6lN6kXwg9JP2qW+BD8ofS/vfFOeSepR6I+kPE+ptdBfSHksPyv92jyoJWPPv2/9P6gRfO2+WfLmvSpvXpTG6eXVzuGeIqeXVzuH82t5Nc9S4kzze+0Tzve+58jby9fytPpe/FfzWHNYeSyx8lhi5im9Sa33kSvOfkt9FFaWIt8h9Qt+1hNmow72
+  </data>
+ </layer>
+ <layer name="layer_1" width="26" height="26">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFQxkwAzHLMLJnFIyCUTAKRsEoGAUjDwAAgvgADw==
+  </data>
+ </layer>
+</map>
