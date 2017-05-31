@@ -10,7 +10,7 @@
 *	@class : player
 *	@brief : 抽象控制接口, 派生出玩家控制类，和ai控制类
 */
-class Player
+class  Player
 {
 protected:
 	//操作的坦克实例

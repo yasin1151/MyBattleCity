@@ -18,9 +18,7 @@ void AIPlayer::update(Layer* layer)
 	//如果当前方向不可以走，则换一个方向
 	if (!m_pTank->isCanMove())
 	{
-
-		m_pTank->getSprite()->setRotation(static_cast<int>(CCRANDOM_0_1() * 3.2) * 90);
-		//m_pTank->command(static_cast<TankCommandType>(rota / 90 + 1));
+		m_pTank->getSprite()->setRotation(static_cast<int>(rand() % 4) * 90);
 	}
 
 	m_pTank->move();

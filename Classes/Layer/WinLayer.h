@@ -12,6 +12,11 @@ public:
 	virtual bool init() override;
 
 	CREATE_FUNC(WinLayer);
+
+	~WinLayer()
+	{
+		
+	}
 };
 
 #endif

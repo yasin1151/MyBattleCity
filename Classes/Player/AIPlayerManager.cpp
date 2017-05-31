@@ -198,3 +198,7 @@ void AIPlayerManager::setUserTank(TankBase* pUserTank)
 	m_pUserTank = pUserTank;
 }
 
+size_t AIPlayerManager::getAIPlayerNum() const
+{
+	return m_listAIPlayer.size();
+}

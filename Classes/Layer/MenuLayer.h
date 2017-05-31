@@ -14,6 +14,10 @@ public:
 	virtual bool init() override;
 
 	CREATE_FUNC(MenuLayer);
+
+	MenuLayer();
+
+	virtual ~MenuLayer();
 };
 
 

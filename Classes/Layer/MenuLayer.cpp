@@ -46,6 +46,15 @@ bool MenuLayer::init()
 	return true;
 }
 
+MenuLayer::MenuLayer()
+{
+		
+}
+MenuLayer::~MenuLayer()
+{
+
+}
+
 Scene* MenuLayer::createScene()
 {
 	Scene* scene = Scene::create();

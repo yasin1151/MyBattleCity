@@ -58,6 +58,9 @@ public:
 	//初始化菜单
 	bool initMenu();
 
+	//初始化键盘事件
+	bool initKeyboardEvent();
+
 	//创建玩家,1代表玩家，2代表ai玩家
 	Player* createPlayer(const TankType& tankType, int playerType, const Vec2& vInitPos);
 

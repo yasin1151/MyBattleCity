@@ -28,11 +28,19 @@ bool GameOverLayer::init()
 	spGameOver->setPosition(visibleSize.width / 2, visibleSize.height * 3 / 4);
 
 
-	MenuItemFont* itemRePlay = MenuItemFont::create(yUtils::GBK2UTF("返回主界面").c_str(), [&](Ref* ref)
+	MenuItemFont* itemRePlay = MenuItemFont::create("back MainMenu", [&](Ref* ref)
 	{
 		CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
 		Director::getInstance()->replaceScene(MenuLayer::createScene());
 	});
+
+
+//	MenuItemFont* itemRePlay = MenuItemFont::create(yUtils::GBK2UTF("返回主界面").c_str(), [&](Ref* ref)
+//	{
+//		CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+//		Director::getInstance()->replaceScene(MenuLayer::createScene());
+//	});
+
 	itemRePlay->setPosition(visibleSize.width / 2, visibleSize.height / 4);
 	Menu* menu = Menu::create(itemRePlay, NULL);
 	this->addChild(menu);

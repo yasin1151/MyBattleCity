@@ -32,6 +32,9 @@ public:
 	//设置用户操作的坦克
 	void setUserTank(TankBase* pUserTank);
 
+	//获取ai玩家数目
+	size_t getAIPlayerNum() const;
+
 };
 
 #endif

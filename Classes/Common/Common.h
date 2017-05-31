@@ -7,6 +7,8 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <cocos2d.h>
+
 
 //地图类型枚举
 typedef enum

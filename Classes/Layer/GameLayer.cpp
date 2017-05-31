@@ -22,8 +22,6 @@ bool GameLayer::init(int roundNum)
 		return false;
 	}
 
-
-
 	//创建一个灰色背景
 	this->addChild(LayerColor::create(Color4B::GRAY), -100);
 
@@ -36,6 +34,9 @@ bool GameLayer::init(int roundNum)
 
 	//初始化菜单
 	initMenu();
+
+	//初始化键盘事件
+	initKeyboardEvent();
 
 	//初始化坦克工厂对象
 	m_pTankFactory = new TankFactory(m_pMap, Vec2(1, 1));
@@ -57,7 +58,6 @@ bool GameLayer::init(int roundNum)
 	m_arrAIPos.push_back(Vec2(mapSize.width / 2, mapSize.height - tileSize.height));
 	m_arrAIPos.push_back(Vec2(mapSize.width - tileSize.width, 
 		mapSize.height - tileSize.height));
-
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -110,9 +110,14 @@ void GameLayer::aiUpdate(float dt)
 void GameLayer::aiCreator(float dt)
 {
 	//只会创建20个敌人
-	if (m_pHudLayer->getRemainEnemyNum() <= 0)
+	if (0 >= m_pHudLayer->getRemainEnemyNum())
 	{
 		this->unschedule(schedule_selector(GameLayer::aiCreator));
+	}
+	//场上最多存在6个ai
+	else if (6 <= m_pAIMgr->getAIPlayerNum())
+	{
+		return;
 	}
 
 	Player* pTmpPlayer = createPlayer(static_cast<TankType>(rand() % 4), 2, 
@@ -193,24 +198,43 @@ bool GameLayer::initMap(const char* fileName)
 bool GameLayer::initMenu()
 {
 	//创建按钮
+
 	MenuItemFont* itemRight =
-		MenuItemFont::create(yUtils::GBK2UTF("右").c_str(), this, menu_selector(GameLayer::RightCallBack));
+		MenuItemFont::create("Ri", this, menu_selector(GameLayer::RightCallBack));
 	itemRight->setPosition(Vec2(130, 100));
 
 	MenuItemFont* itemLeft =
-		MenuItemFont::create(yUtils::GBK2UTF("左").c_str(), this, menu_selector(GameLayer::LeftCallBack));
+		MenuItemFont::create("Le", this, menu_selector(GameLayer::LeftCallBack));
 	itemLeft->setPosition(Vec2(50, 100));
 
 	MenuItemFont* itemUp =
-		MenuItemFont::create(yUtils::GBK2UTF("上").c_str(), this, menu_selector(GameLayer::UpCallBack));
+		MenuItemFont::create("Up", this, menu_selector(GameLayer::UpCallBack));
 	itemUp->setPosition(Vec2(90, 150));
 
 	MenuItemFont* itemDown =
-		MenuItemFont::create(yUtils::GBK2UTF("下").c_str(), this, menu_selector(GameLayer::DownCallBack));
+		MenuItemFont::create("Do", this, menu_selector(GameLayer::DownCallBack));
 	itemDown->setPosition(Vec2(90, 100));
 
+//	MenuItemFont* itemRight =
+//		MenuItemFont::create(yUtils::GBK2UTF("右").c_str(), this, menu_selector(GameLayer::RightCallBack));
+//	itemRight->setPosition(Vec2(130, 100));
+//
+//	MenuItemFont* itemLeft =
+//		MenuItemFont::create(yUtils::GBK2UTF("左").c_str(), this, menu_selector(GameLayer::LeftCallBack));
+//	itemLeft->setPosition(Vec2(50, 100));
+//
+//	MenuItemFont* itemUp =
+//		MenuItemFont::create(yUtils::GBK2UTF("上").c_str(), this, menu_selector(GameLayer::UpCallBack));
+//	itemUp->setPosition(Vec2(90, 150));
+//
+//	MenuItemFont* itemDown =
+//		MenuItemFont::create(yUtils::GBK2UTF("下").c_str(), this, menu_selector(GameLayer::DownCallBack));
+//	itemDown->setPosition(Vec2(90, 100));
+
+//	MenuItemFont* itemExit =
+//		MenuItemFont::create(yUtils::GBK2UTF("退出游戏").c_str(),  
 	MenuItemFont* itemExit =
-		MenuItemFont::create(yUtils::GBK2UTF("退出游戏").c_str(),  
+		MenuItemFont::create("back",
 		[&](Ref* ref)
 	{
 		Director::getInstance()->end();
@@ -235,6 +259,47 @@ bool GameLayer::initMenu()
 
 	this->addChild(menu);
 
+	return true;
+}
+
+bool GameLayer::initKeyboardEvent()
+{
+	//在win32下
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	auto myKeyListener = EventListenerKeyboard::create(); //创建事件监听器监听键盘事件
+	//键盘按键按下时的响应
+	myKeyListener->onKeyPressed = [&](EventKeyboard::KeyCode keycode, cocos2d::Event *event)
+	{
+		switch (keycode)
+		{
+		case EventKeyboard::KeyCode::KEY_A: 
+			//left
+			LeftCallBack(nullptr);
+			break;
+		case EventKeyboard::KeyCode::KEY_D: 
+			//right
+			RightCallBack(nullptr);
+			break;
+		case EventKeyboard::KeyCode::KEY_W: 
+			//up
+			UpCallBack(nullptr);
+			break;
+		case EventKeyboard::KeyCode::KEY_S:
+			//down
+			DownCallBack(nullptr);
+			break;
+		case EventKeyboard::KeyCode::KEY_J:
+			//shot
+			ShotCallBack(nullptr);
+			break;
+		case EventKeyboard::KeyCode::KEY_K: 
+			break;
+
+		}
+	};
+
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(myKeyListener, this);
+#endif
 	return true;
 }
 

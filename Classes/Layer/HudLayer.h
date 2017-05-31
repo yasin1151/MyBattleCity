@@ -116,7 +116,10 @@ public:
 		m_bIsUpdata = true;
 	}
 
-
+	~HudLayer()
+	{
+		
+	}
 };
 
 #endif
