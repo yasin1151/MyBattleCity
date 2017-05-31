@@ -87,8 +87,8 @@ void TankBase::command(const TankCommandType& type)
 	//进行速度缩放
 
 	nextRect = Rect(
-		Vec2(nextRect.getMinX() + fOffsetX * m_vSpeed.x * tileSize.width, 
-		nextRect.getMinY() + fOffsetY *  m_vSpeed.y * tileSize.height),
+		Vec2(nextRect.getMinX() + fOffsetX * m_vSpeed.x , 
+		nextRect.getMinY() + fOffsetY *  m_vSpeed.y),
 		nextRect.size
 		);
 

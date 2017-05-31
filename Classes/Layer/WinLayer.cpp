@@ -29,7 +29,7 @@ bool WinLayer::init()
 
 	MenuItemFont* itemRePlay = MenuItemFont::create(yUtils::GBK2UTF("返回主界面").c_str(), [&](Ref* ref)
 	{
-		CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 		Director::getInstance()->replaceScene(MenuLayer::createScene());
 	});
 	itemRePlay->setPosition(visibleSize.width / 2, visibleSize.height / 4);

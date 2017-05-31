@@ -74,13 +74,13 @@ bool GameLayer::init(int roundNum)
 	this->scheduleUpdate();
 
 	//开启ai调度器
-	this->schedule(schedule_selector(GameLayer::aiUpdate), 0.5f);
+	//this->schedule(schedule_selector(GameLayer::aiUpdate), 0.5f);
 
 	//开启ai创建器
 	this->schedule(schedule_selector(GameLayer::aiCreator), 3.0f, -1, 5.0f);
 
 	//开启声音
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("music/start.aif", true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("music/start.aif", true);
 	
 	return true;
 }
@@ -99,12 +99,34 @@ GameLayer::~GameLayer()
 
 void GameLayer::update(float dt)
 {
+	//处理键盘连击
+	for (auto it = m_listKeyCode.begin();
+		it != m_listKeyCode.end();
+		)
+	{
+
+		KeyboardCallBack(*it);
+		//如果是发射
+		if (*it == EventKeyboard::KeyCode::KEY_J)
+		{
+			//只发射一次
+			it = m_listKeyCode.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+
+	m_pAIMgr->aiUpdte(this, dt);
+	
 	m_pAIMgr->collisionUpdate(this, dt);
+
+
 }
 
 void GameLayer::aiUpdate(float dt)
 {
-	m_pAIMgr->aiUpdte(this);
 }
 
 void GameLayer::aiCreator(float dt)
@@ -270,32 +292,12 @@ bool GameLayer::initKeyboardEvent()
 	//键盘按键按下时的响应
 	myKeyListener->onKeyPressed = [&](EventKeyboard::KeyCode keycode, cocos2d::Event *event)
 	{
-		switch (keycode)
-		{
-		case EventKeyboard::KeyCode::KEY_A: 
-			//left
-			LeftCallBack(nullptr);
-			break;
-		case EventKeyboard::KeyCode::KEY_D: 
-			//right
-			RightCallBack(nullptr);
-			break;
-		case EventKeyboard::KeyCode::KEY_W: 
-			//up
-			UpCallBack(nullptr);
-			break;
-		case EventKeyboard::KeyCode::KEY_S:
-			//down
-			DownCallBack(nullptr);
-			break;
-		case EventKeyboard::KeyCode::KEY_J:
-			//shot
-			ShotCallBack(nullptr);
-			break;
-		case EventKeyboard::KeyCode::KEY_K: 
-			break;
+		m_listKeyCode.push_back(keycode);
+	};
 
-		}
+	myKeyListener->onKeyReleased = [&](EventKeyboard::KeyCode keycode, cocos2d::Event *event)
+	{
+		m_listKeyCode.remove(keycode);
 	};
 
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(myKeyListener, this);
@@ -336,5 +338,36 @@ void GameLayer::ShotCallBack(Ref* ref)
 {
 	log("GameLayer::ShotCallBack");
 	m_pPlayer->hanleInput(PlayerShot, this);
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("music/bullet.aif");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("music/bullet.aif");
+}
+
+void GameLayer::KeyboardCallBack(EventKeyboard::KeyCode keyCode)
+{
+	//在onKeyPress中new，在本处释放
+	switch (keyCode)
+	{
+	case EventKeyboard::KeyCode::KEY_A:
+		//left
+		LeftCallBack(nullptr);
+		break;
+	case EventKeyboard::KeyCode::KEY_D:
+		//right
+		RightCallBack(nullptr);
+		break;
+	case EventKeyboard::KeyCode::KEY_W:
+		//up
+		UpCallBack(nullptr);
+		break;
+	case EventKeyboard::KeyCode::KEY_S:
+		//down
+		DownCallBack(nullptr);
+		break;
+	case EventKeyboard::KeyCode::KEY_J:
+		//shot
+		ShotCallBack(nullptr);
+		break;
+	case EventKeyboard::KeyCode::KEY_K:
+		break;
+	}
+
 }

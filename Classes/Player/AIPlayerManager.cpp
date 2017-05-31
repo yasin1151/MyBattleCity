@@ -21,13 +21,13 @@ void AIPlayerManager::addAiPlayer(Player* pPlayer)
 	m_listAIPlayer.push_back(pPlayer);
 }
 
-void AIPlayerManager::aiUpdte(Layer* layer)
+void AIPlayerManager::aiUpdte(Layer* layer, float dt)
 {
 	for (auto it = m_listAIPlayer.begin();
 		it != m_listAIPlayer.end(); )
 	{
 		AIPlayer* pBuf = static_cast<AIPlayer*>(*it);
-		pBuf->update(layer);
+		pBuf->update(layer, dt);
 		++it;
 	}
 }
@@ -103,7 +103,7 @@ void AIPlayerManager::collisionUpdate(Layer* layer, float dt)
 					delete pBuf;
 
 					//播放被击毁的音效
-					CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("music/blast.aif");
+					CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("music/blast.aif");
 
 					//胜利判断
 					if (m_listAIPlayer.empty() && pLayer->getHudLayer()->getRemainEnemyNum() <= 0)

@@ -36,6 +36,9 @@ private:
 
 	//敌军出现的位置数组
 	std::vector<Vec2> m_arrAIPos;
+
+	//键盘映射
+	std::list<EventKeyboard::KeyCode> m_listKeyCode;
 public:
 	//roundNum : 关卡数目，1~n
 	static GameLayer* create(int roundNum);
@@ -77,6 +80,8 @@ public:
 	void DownCallBack(Ref* ref);
 
 	void ShotCallBack(Ref* ref);
+
+	void KeyboardCallBack(EventKeyboard::KeyCode keyCode);
 };
 
 #endif

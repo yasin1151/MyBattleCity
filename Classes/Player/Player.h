@@ -32,7 +32,7 @@ public:
 	virtual void hanleInput(const PlayerInputType& type, Layer* layer);
 
 	//每一帧或者间隔多少秒调用
-	virtual void update(Layer* layer);
+	virtual void update(Layer* layer, float dt);
 
 	//获取状态内存池
 	SimpleMemPool<PlayerState>& getStateMemPool();

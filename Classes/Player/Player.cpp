@@ -41,7 +41,7 @@ void Player::hanleInput(const PlayerInputType& type, Layer* layer)
 	}
 }
 
-void Player::update(Layer* layer)
+void Player::update(Layer* layer, float dt)
 {
 	m_pState->update(*this);
 }

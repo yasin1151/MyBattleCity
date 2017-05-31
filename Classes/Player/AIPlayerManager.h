@@ -24,7 +24,7 @@ public:
 	void addAiPlayer(Player* pPlayer);
 
 	//ai更新
-	void aiUpdte(Layer* layer);
+	void aiUpdte(Layer* layer, float dt);
 
 	//碰撞检测更新
 	void collisionUpdate(Layer* layer, float dt);

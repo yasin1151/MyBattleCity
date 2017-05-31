@@ -46,7 +46,7 @@ bool GameOverLayer::init()
 	this->addChild(menu);
 	menu->setPosition(Vec2::ZERO);
 
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("music/gameover.aif");
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("music/gameover.aif");
 
 	return true;
 }
