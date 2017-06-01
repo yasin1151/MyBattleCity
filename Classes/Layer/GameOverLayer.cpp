@@ -30,7 +30,7 @@ bool GameOverLayer::init()
 
 	MenuItemFont* itemRePlay = MenuItemFont::create("back MainMenu", [&](Ref* ref)
 	{
-		CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 		Director::getInstance()->replaceScene(MenuLayer::createScene());
 	});
 

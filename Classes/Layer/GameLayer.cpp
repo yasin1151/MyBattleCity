@@ -32,6 +32,10 @@ bool GameLayer::init(int roundNum)
 	m_pHudLayer = HudLayer::create(1, 4, 20);
 	this->addChild(m_pHudLayer, 100);
 
+	//初始化摇杆对象
+	m_pRocker = Rocker4A::create("Rocker/Direction_bc.png", "Rocker/Direction_bt.png", Vec2(100, 100));
+	this->addChild(m_pRocker);
+
 	//初始化菜单
 	initMenu();
 
@@ -73,9 +77,6 @@ bool GameLayer::init(int roundNum)
 	//开启调度器
 	this->scheduleUpdate();
 
-	//开启ai调度器
-	//this->schedule(schedule_selector(GameLayer::aiUpdate), 0.5f);
-
 	//开启ai创建器
 	this->schedule(schedule_selector(GameLayer::aiCreator), 3.0f, -1, 5.0f);
 
@@ -99,24 +100,17 @@ GameLayer::~GameLayer()
 
 void GameLayer::update(float dt)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	//处理键盘连击
 	for (auto it = m_listKeyCode.begin();
 		it != m_listKeyCode.end();
-		)
+		++it)
 	{
 
 		KeyboardCallBack(*it);
-		//如果是发射
-		if (*it == EventKeyboard::KeyCode::KEY_J)
-		{
-			//只发射一次
-			it = m_listKeyCode.erase(it);
-		}
-		else
-		{
-			++it;
-		}
 	}
+#endif
+	rockerUpdate(dt);
 
 	m_pAIMgr->aiUpdte(this, dt);
 	
@@ -125,8 +119,23 @@ void GameLayer::update(float dt)
 
 }
 
-void GameLayer::aiUpdate(float dt)
+void GameLayer::rockerUpdate(float dt)
 {
+	switch (m_pRocker->getState())
+	{
+	case RockerState::Up: 
+		UpCallBack(nullptr);
+		break;
+	case RockerState::Down: 
+		DownCallBack(nullptr);
+		break;
+	case RockerState::Left: 
+		LeftCallBack(nullptr);
+		break;
+	case RockerState::Right: 
+		RightCallBack(nullptr);
+		break;
+	}
 }
 
 void GameLayer::aiCreator(float dt)
@@ -221,21 +230,21 @@ bool GameLayer::initMenu()
 {
 	//创建按钮
 
-	MenuItemFont* itemRight =
-		MenuItemFont::create("Ri", this, menu_selector(GameLayer::RightCallBack));
-	itemRight->setPosition(Vec2(130, 100));
+	//MenuItemFont* itemRight =
+	//	MenuItemFont::create("Ri", this, menu_selector(GameLayer::RightCallBack));
+	//itemRight->setPosition(Vec2(130, 100));
 
-	MenuItemFont* itemLeft =
-		MenuItemFont::create("Le", this, menu_selector(GameLayer::LeftCallBack));
-	itemLeft->setPosition(Vec2(50, 100));
+	//MenuItemFont* itemLeft =
+	//	MenuItemFont::create("Le", this, menu_selector(GameLayer::LeftCallBack));
+	//itemLeft->setPosition(Vec2(50, 100));
 
-	MenuItemFont* itemUp =
-		MenuItemFont::create("Up", this, menu_selector(GameLayer::UpCallBack));
-	itemUp->setPosition(Vec2(90, 150));
+	//MenuItemFont* itemUp =
+	//	MenuItemFont::create("Up", this, menu_selector(GameLayer::UpCallBack));
+	//itemUp->setPosition(Vec2(90, 150));
 
-	MenuItemFont* itemDown =
-		MenuItemFont::create("Do", this, menu_selector(GameLayer::DownCallBack));
-	itemDown->setPosition(Vec2(90, 100));
+	//MenuItemFont* itemDown =
+	//	MenuItemFont::create("Do", this, menu_selector(GameLayer::DownCallBack));
+	//itemDown->setPosition(Vec2(90, 100));
 
 //	MenuItemFont* itemRight =
 //		MenuItemFont::create(yUtils::GBK2UTF("右").c_str(), this, menu_selector(GameLayer::RightCallBack));
@@ -275,7 +284,8 @@ bool GameLayer::initMenu()
 		CC_CALLBACK_1(GameLayer::ShotCallBack, this));
 	fireBtn->setPosition(Vec2(Director::getInstance()->getWinSize().width - fireBtn->getContentSize().width / 2 - 20, 100));
 
-	Menu* menu = Menu::create(itemRight, itemLeft, itemUp, itemDown, itemExit, fireBtn, NULL);
+	//Menu* menu = Menu::create(itemRight, itemLeft, itemUp, itemDown, itemExit, fireBtn, NULL);
+	Menu* menu = Menu::create(itemExit, fireBtn, NULL);
 	menu->setPosition(0, 0);
 	menu->setAnchorPoint(Vec2(0, 0));
 
@@ -283,6 +293,8 @@ bool GameLayer::initMenu()
 
 	return true;
 }
+
+
 
 bool GameLayer::initKeyboardEvent()
 {
@@ -292,7 +304,14 @@ bool GameLayer::initKeyboardEvent()
 	//键盘按键按下时的响应
 	myKeyListener->onKeyPressed = [&](EventKeyboard::KeyCode keycode, cocos2d::Event *event)
 	{
-		m_listKeyCode.push_back(keycode);
+		if (EventKeyboard::KeyCode::KEY_J == keycode)
+		{
+			ShotCallBack(nullptr);
+		}
+		else
+		{
+			m_listKeyCode.push_back(keycode);
+		}
 	};
 
 	myKeyListener->onKeyReleased = [&](EventKeyboard::KeyCode keycode, cocos2d::Event *event)
@@ -343,7 +362,6 @@ void GameLayer::ShotCallBack(Ref* ref)
 
 void GameLayer::KeyboardCallBack(EventKeyboard::KeyCode keyCode)
 {
-	//在onKeyPress中new，在本处释放
 	switch (keyCode)
 	{
 	case EventKeyboard::KeyCode::KEY_A:

@@ -37,6 +37,12 @@
     <Filter Include="src\yUtils\MemPool">
       <UniqueIdentifier>{d2ee7188-c1e3-4b2f-b0a6-945187804ee6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Stage">
+      <UniqueIdentifier>{b11a4d37-2084-4e82-bdcb-6da7e961504a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\yUtils\cocos">
+      <UniqueIdentifier>{2e1c20b1-4170-47dc-84a8-fa2f06d335e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -98,6 +104,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Layer\WinLayer.cpp">
       <Filter>src\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\yUtils\cocos\Rocker4A.cpp">
+      <Filter>src\yUtils\cocos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\yUtils\cocos\RockerBase.cpp">
+      <Filter>src\yUtils\cocos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +184,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Layer\WinLayer.h">
       <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\yUtils\cocos\Rocker4A.h">
+      <Filter>src\yUtils\cocos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\yUtils\cocos\RockerBase.h">
+      <Filter>src\yUtils\cocos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

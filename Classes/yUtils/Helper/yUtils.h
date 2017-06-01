@@ -1,10 +1,10 @@
 /*
-	author : yasin
-	time   : 2016/3/23
-	version: 1.0
-	ext    : myself utils lib
-	e-mail : yasin1151@outlook.com
- */
+author : yasin
+time   : 2016/3/23
+version: 1.0
+ext    : myself utils lib
+e-mail : yasin1151@outlook.com
+*/
 
 #ifndef _YASIN_UTILS_H_
 #define _YASIN_UTILS_H_
@@ -13,6 +13,7 @@
 #include <sstream>
 #include <ctime>
 #include <cstdio>
+#include <random>
 //using namespace std;
 
 /*
@@ -20,7 +21,7 @@ class yUtils
 {
 public:
 
-	static int getRandom(int _begin, int _end);
+static int getRandom(int _begin, int _end);
 };
 */
 
@@ -43,7 +44,7 @@ namespace yUtils
 			return "";
 		}
 
-		char szFormat[MAX_INT_NUM] = {"%d"};
+		char szFormat[MAX_INT_NUM] = { "%d" };
 		char szBuf[MY_MAX_BYTE] = {};
 		if (floatSaveDigits)
 		{
@@ -62,10 +63,8 @@ namespace yUtils
 		return szBuf;
 	}
 
-
-
 	/*
-		@brief : 判断两个浮点型是否相等
+	@brief : 判断两个浮点型是否相等
 	*/
 
 	inline bool IsEqualF(float lhs, float rhs)
@@ -78,7 +77,7 @@ namespace yUtils
 	}
 
 	/*
-		@brief : 判断两个double是否相等
+	@brief : 判断两个double是否相等
 	*/
 	inline bool IsEqualLF(double lhs, double rhs)
 	{
@@ -89,7 +88,72 @@ namespace yUtils
 		return false;
 	}
 
+	/*
+	@brief : 获取两个点的角度
+	*/
+#ifdef __COCOS2D_H__
 
+	/*
+	@brief : 角度转弧度
+	*/
+	static float Angle2Radian(float angle)
+	{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+		return angle * std::_Pi / 180;
+#else
+		return angle * 3.1415 / 180;
+#endif
+
+	}
+
+	/*
+	@brief : 弧度转角度
+	*/
+	static float Radian2Angle(float radian)
+	{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+		return radian * 180 / std::_Pi;
+#else
+		return radian * 180 / 3.1415;
+#endif
+
+	}
+
+	/*
+	@brief : 获取两个点之间的弧度
+	*/
+	static float GetRadian(const cocos2d::Vec2& point1, const cocos2d::Vec2& point2)
+	{
+		float xDis = point1.x - point2.x;
+
+		float yDis = point1.y - point2.y;
+
+		float bevelEdge = sqrt(pow(xDis, 2) + pow(yDis, 2));
+
+		float radian = acos(xDis / bevelEdge);
+
+		//如果在第四象限，则为负数
+		if (point1.y < point2.y)
+		{
+			radian = -radian;
+		}
+
+		return radian;
+	}
+
+
+	/*
+	@brief : 获取两个点之间的角度
+	*/
+	static float GetAngle(const cocos2d::Vec2& point1, const cocos2d::Vec2& point2)
+	{
+		return Angle2Radian(GetRadian(point1, point2));
+	}
+
+
+	/*
+	@brief : 将vs的gbk编码转换成utf-8编码，用于log
+	*/
 	static std::string GBK2UTF(const std::string& str)
 	{
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -130,8 +194,9 @@ namespace yUtils
 		return str;
 #endif
 	}
-}
 
+#endif
+}
 
 
 #endif	// end _YASIN_UTILS_H_

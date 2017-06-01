@@ -163,6 +163,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Tank\MineTank.cpp" />
     <ClCompile Include="..\Classes\Tank\TankBase.cpp" />
     <ClCompile Include="..\Classes\Tank\TankFactory.cpp" />
+    <ClCompile Include="..\Classes\yUtils\cocos\Rocker4A.cpp" />
+    <ClCompile Include="..\Classes\yUtils\cocos\RockerBase.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +189,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Tank\MineTank.h" />
     <ClInclude Include="..\Classes\Tank\TankBase.h" />
     <ClInclude Include="..\Classes\Tank\TankFactory.h" />
+    <ClInclude Include="..\Classes\yUtils\cocos\Rocker4A.h" />
+    <ClInclude Include="..\Classes\yUtils\cocos\RockerBase.h" />
     <ClInclude Include="..\Classes\yUtils\Helper\yUtils.h" />
     <ClInclude Include="..\Classes\yUtils\MemPool\SimpleMemPool.h" />
     <ClInclude Include="main.h" />

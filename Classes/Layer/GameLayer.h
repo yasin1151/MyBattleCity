@@ -11,6 +11,7 @@
 #include "Player\AIPlayer.h"
 #include "Tank\TankFactory.h"
 #include "Player\AIPlayerManager.h"
+#include "yUtils\cocos\Rocker4A.h"
 USING_NS_CC;
 
 class GameLayer : public Layer
@@ -39,6 +40,9 @@ private:
 
 	//键盘映射
 	std::list<EventKeyboard::KeyCode> m_listKeyCode;
+
+	//摇杆对象
+	Rocker4A* m_pRocker;
 public:
 	//roundNum : 关卡数目，1~n
 	static GameLayer* create(int roundNum);
@@ -49,8 +53,8 @@ public:
 
 	virtual void update(float dt) override;
 
-	//ai更新，1秒1次
-	void aiUpdate(float dt);
+	//摇杆更新
+	void rockerUpdate(float dt);
 
 	//添加ai对象
 	void aiCreator(float dt);
