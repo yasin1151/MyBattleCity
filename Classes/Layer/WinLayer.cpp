@@ -23,6 +23,7 @@ bool WinLayer::init()
 
 	Label* pLabel = Label::create();
 	pLabel->setString("You Win!");
+	pLabel->setSystemFontSize(32);
 	this->addChild(pLabel);
 	pLabel->setPosition(visibleSize.width / 2, visibleSize.height * 3 / 4);
 

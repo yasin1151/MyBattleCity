@@ -2,6 +2,10 @@
 #include "MenuLayer.h"
 #include "GameLayer.h"
 
+ChooseMenuLayer::~ChooseMenuLayer()
+{
+}
+
 Scene* ChooseMenuLayer::createScene()
 {
 	Scene* scene = Scene::create();
@@ -35,7 +39,7 @@ bool ChooseMenuLayer::init()
 	//设置代理对象
 	tableView->setDelegate(this);
 	// 填充顺序
-	//tableView->setVerticalFillOrder(TableView::VerticalFillOrder::BOTTOM_UP);
+	tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
 	//添加tableview到当前layer
 	this->addChild(tableView);
 	//加载tableview
@@ -82,37 +86,35 @@ Size ChooseMenuLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 
 TableViewCell* ChooseMenuLayer::tableCellAtIndex(TableView *table, ssize_t idx)
 {
-	std::string szBuf = CCString::createWithFormat("Round %d", idx + 1)->getCString();
-	
+	//顺序
+	static int iSeq = 0;
+
+	log("tableCellAtIndex idx : %d", idx);
 	TableViewCell *cell = table->dequeueCell();
+
+
 	if (!cell) {
 		cell = new (std::nothrow) TableViewCell();
 		cell->autorelease();
 
 		//创建缩略图
-		TMXTiledMap* pMap = TMXTiledMap::create(CCString::createWithFormat("maps/Round%d.tmx", idx + 1)->getCString());
+		TMXTiledMap* pMap = TMXTiledMap::create(CCString::createWithFormat("maps/Round%d.tmx", iSeq + 1)->getCString());
 		float rota = static_cast<float>(m_vConfig["SmallHeight"].asInt()) / pMap->getContentSize().width;
 		pMap->setScale(rota);
-		//pMap->setScale(0.5f);
 		pMap->setPosition(Vec2::ZERO);
 		pMap->setAnchorPoint(Vec2::ZERO);
 
-
-		auto label = Label::createWithSystemFont(szBuf, "Helvetica", 25);
-		label->setPosition(m_vConfig["SmallWidth"].asInt() / 4 - 10,
-			0);
+		//创建文字
+		auto label = Label::createWithSystemFont(CCString::createWithFormat("Round %d", iSeq + 1)->getCString(), "Helvetica", 25);
+		label->setPosition(m_vConfig["SmallWidth"].asInt() / 4 - 10, 0);
 		label->setAnchorPoint(Vec2::ZERO);
 		label->setTag(123);
 
 		cell->addChild(pMap);
 		cell->addChild(label);
-	}
-	else
-	{
-		auto label = (Label*)cell->getChildByTag(123);
-		label->setString(szBuf);
-	}
 
+		iSeq++;
+	}
 
 	return cell;
 }

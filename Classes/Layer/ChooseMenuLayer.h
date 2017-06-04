@@ -3,6 +3,7 @@
 
 #include <cocos2d.h>
 #include <cocos-ext.h>
+#include <unordered_map>
 USING_NS_CC;
 USING_NS_CC_EXT;
 
@@ -17,10 +18,9 @@ class ChooseMenuLayer : public Layer,
 private:
 	//本层的配置对象
 	ValueMap m_vConfig;
-
-	std::vector<TMXTiledMap*> m_arrMap;
-
 public:
+	virtual ~ChooseMenuLayer() override;
+
 	static Scene* createScene();
 
 	virtual bool init() override;

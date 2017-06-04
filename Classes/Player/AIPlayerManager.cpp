@@ -44,7 +44,7 @@ void AIPlayerManager::collisionUpdate(Layer* layer, float dt)
 	BulletManager* pUserBulletMgr = m_pUserTank->getBulletMgr();
 	
 	//我方子弹和ai坦克的碰撞检测
-	auto userBulletList = pUserBulletMgr->getActiveList();
+	auto& userBulletList = pUserBulletMgr->getActiveList();
 	
 	for (auto it_bullet = userBulletList.begin();
 		it_bullet != userBulletList.end();
@@ -60,7 +60,6 @@ void AIPlayerManager::collisionUpdate(Layer* layer, float dt)
 			AIPlayer* pBuf = static_cast<AIPlayer*>(*it);
 
 			if (
-				pBullet->getSprite()->isVisible() && 
 				pBullet->getSprite()->getBoundingBox().intersectsRect(
 				pBuf->getTank()->getNextMoveRect()))
 			{
@@ -80,7 +79,7 @@ void AIPlayerManager::collisionUpdate(Layer* layer, float dt)
 					//从容器中移除ai玩家
 					it = m_listAIPlayer.erase(it);
 
-					auto deleteList = pBuf->getTank()->getBulletMgr()->getActiveList();
+					auto& deleteList = pBuf->getTank()->getBulletMgr()->getActiveList();
 					//清理所有子弹
 					for (auto it_delete = deleteList.begin();
 						it_delete != deleteList.end();
@@ -153,7 +152,7 @@ void AIPlayerManager::collisionUpdate(Layer* layer, float dt)
 	{
 		AIPlayer* pBuf = static_cast<AIPlayer*>(*it);
 		BulletManager* pBufBulletMgr = pBuf->getTank()->getBulletMgr();
-		auto bulletList = pBufBulletMgr->getActiveList();
+		auto& bulletList = pBufBulletMgr->getActiveList();
 
 
 		//每一个ai的子弹列表
@@ -162,7 +161,6 @@ void AIPlayerManager::collisionUpdate(Layer* layer, float dt)
 		{
 			BulletBase* pBullet = *it_bullet;
 			if (
-				pBullet->getSprite()->isVisible() && 
 				pBullet->getSprite()->getBoundingBox().intersectsRect(
 				m_pUserTank->getNextMoveRect()))
 			{

@@ -61,6 +61,10 @@ public:
 	//设置剩下的敌军数目
 	void setRemainEnemyNum(int iEnemyNum)
 	{
+		if (iEnemyNum < 0)
+		{
+			iEnemyNum = 0;
+		}
 		m_iCurEnemyNum = iEnemyNum;
 		m_bIsUpdata = true;
 	}
