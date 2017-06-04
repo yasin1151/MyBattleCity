@@ -12,6 +12,8 @@ time  : 2017/05/30
 2. 增加了选图界面
 3. 增加了道具系统(目前只支持2种道具) 
 
+![testv0.3.png](https://github.com/yasin1151/MyBattleCity/blob/master/mdImg/testv0.3.png?raw=true)
+
 
 ---
 > v0.2  
