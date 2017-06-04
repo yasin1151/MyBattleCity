@@ -111,6 +111,21 @@
     <ClCompile Include="..\Classes\yUtils\cocos\RockerBase.cpp">
       <Filter>src\yUtils\cocos</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Stage\StageBase.cpp">
+      <Filter>src\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Stage\SteelStage.cpp">
+      <Filter>src\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Stage\StageManager.cpp">
+      <Filter>src\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Stage\ActiveStage.cpp">
+      <Filter>src\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Layer\ChooseMenuLayer.cpp">
+      <Filter>src\Layer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -190,6 +205,24 @@
     </ClInclude>
     <ClInclude Include="..\Classes\yUtils\cocos\RockerBase.h">
       <Filter>src\yUtils\cocos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Stage\StageBase.h">
+      <Filter>src\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Stage\SteelStage.h">
+      <Filter>src\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Stage\StageManager.h">
+      <Filter>src\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Stage\NullStage.h">
+      <Filter>src\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Stage\ActiveStage.h">
+      <Filter>src\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Layer\ChooseMenuLayer.h">
+      <Filter>src\Layer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

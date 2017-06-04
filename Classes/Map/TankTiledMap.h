@@ -41,7 +41,7 @@ public:
 template <typename CollisionFunc>
 bool TankTiledMap::isCollision(const Rect& tankBoundingBox, CollisionFunc func)
 {
-	log("isCollision");
+	//log("isCollision");
 	int gid = 0;
 	//地图大小
 	Size mapSize = m_pMap->getContentSize();
@@ -67,7 +67,7 @@ bool TankTiledMap::isCollision(const Rect& tankBoundingBox, CollisionFunc func)
 		static_cast<int>(tankBoundingBox.getMinX() / tileSize.width),
 		static_cast<int>(maxY / tileSize.height)));
 
-	log("collision1 gid : %d", gid); 
+	//log("collision1 gid : %d", gid); 
 
 	//1.2 判断gid是否为空，或者特殊值
 	if (func(gid))
@@ -79,7 +79,7 @@ bool TankTiledMap::isCollision(const Rect& tankBoundingBox, CollisionFunc func)
 	gid = m_pLayer0->getTileGIDAt(Vec2(
 		static_cast<int>(tankBoundingBox.getMaxX() / tileSize.width),
 		static_cast<int>(maxY / tileSize.height)));
-	log("collision2 gid : %d", gid);
+	//log("collision2 gid : %d", gid);
 
 	//2.2 
 	if (func(gid))
@@ -91,7 +91,7 @@ bool TankTiledMap::isCollision(const Rect& tankBoundingBox, CollisionFunc func)
 	gid = m_pLayer0->getTileGIDAt(Vec2(
 		static_cast<int>(tankBoundingBox.getMinX() / tileSize.width),
 		static_cast<int>(minY / tileSize.height)));
-	log("collision3 gid : %d", gid);
+	//log("collision3 gid : %d", gid);
 
 	//3.2
 	if (func(gid))
@@ -103,7 +103,7 @@ bool TankTiledMap::isCollision(const Rect& tankBoundingBox, CollisionFunc func)
 	gid = m_pLayer0->getTileGIDAt(Vec2(
 		static_cast<int>(tankBoundingBox.getMaxX() / tileSize.width),
 		static_cast<int>(minY / tileSize.height)));
-	log("collision4 gid : %d", gid);
+	//log("collision4 gid : %d", gid);
 
 	//4.2
 	if (func(gid))

@@ -54,6 +54,9 @@ static std::unordered_map<int, TiledMapType> gid2Type = {
 	{ 24, MapHome },
 };
 
+#define MAP_STEEL 5
+#define MAP_WALL 13
 
+#define MY_INT_MAX 2147483647
 
 #endif

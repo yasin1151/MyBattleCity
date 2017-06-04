@@ -49,7 +49,7 @@ TankBase* TankFactory::create(const TankType& tankType)
 	case MineTankB: 
 	case MineTankC: 
 		pRet = new MineTank(Sprite::create("tank/player2/player2U.png"), tankType,
-			m_pMap, m_vInitSpeed, 4);
+			m_pMap, m_vInitSpeed, 16);
 		break;
 	}
 	return pRet;

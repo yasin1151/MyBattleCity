@@ -12,6 +12,7 @@
 #include "Tank\TankFactory.h"
 #include "Player\AIPlayerManager.h"
 #include "yUtils\cocos\Rocker4A.h"
+#include "Stage\StageManager.h"
 USING_NS_CC;
 
 class GameLayer : public Layer
@@ -43,6 +44,9 @@ private:
 
 	//摇杆对象
 	Rocker4A* m_pRocker;
+
+	//道具管理类
+	StageManager* m_pStageMgr;
 public:
 	//roundNum : 关卡数目，1~n
 	static GameLayer* create(int roundNum);
@@ -52,6 +56,9 @@ public:
 	virtual ~GameLayer() override;
 
 	virtual void update(float dt) override;
+
+	//道具出现更新函数
+	void stageCreateUpdate(float dt);
 
 	//摇杆更新
 	void rockerUpdate(float dt);
@@ -64,6 +71,15 @@ public:
 	
 	//初始化菜单
 	bool initMenu();
+
+	//初始化ai玩家
+	bool initAIPlayer();
+
+	//初始化用户
+	bool initPlayer();
+
+	//初始化道具
+	bool initStage();
 
 	//初始化键盘事件
 	bool initKeyboardEvent();

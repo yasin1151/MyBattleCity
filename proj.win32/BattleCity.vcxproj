@@ -71,7 +71,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -113,7 +113,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -148,6 +148,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Bullet\BulletBase.cpp" />
     <ClCompile Include="..\Classes\Bullet\BulletManager.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\Layer\ChooseMenuLayer.cpp" />
     <ClCompile Include="..\Classes\Layer\GameLayer.cpp" />
     <ClCompile Include="..\Classes\Layer\GameOverLayer.cpp" />
     <ClCompile Include="..\Classes\Layer\HudLayer.cpp" />
@@ -159,6 +160,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Player\AIPlayerState.cpp" />
     <ClCompile Include="..\Classes\Player\Player.cpp" />
     <ClCompile Include="..\Classes\Player\PlayerState.cpp" />
+    <ClCompile Include="..\Classes\Stage\ActiveStage.cpp" />
+    <ClCompile Include="..\Classes\Stage\StageBase.cpp" />
+    <ClCompile Include="..\Classes\Stage\StageManager.cpp" />
+    <ClCompile Include="..\Classes\Stage\SteelStage.cpp" />
     <ClCompile Include="..\Classes\Tank\EnemyTank.cpp" />
     <ClCompile Include="..\Classes\Tank\MineTank.cpp" />
     <ClCompile Include="..\Classes\Tank\TankBase.cpp" />
@@ -173,6 +178,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Bullet\BulletManager.h" />
     <ClInclude Include="..\Classes\Common\Common.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\Layer\ChooseMenuLayer.h" />
     <ClInclude Include="..\Classes\Layer\GameLayer.h" />
     <ClInclude Include="..\Classes\Layer\GameOverLayer.h" />
     <ClInclude Include="..\Classes\Layer\HudLayer.h" />
@@ -185,6 +191,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Player\Player.h" />
     <ClInclude Include="..\Classes\Player\PlayerState.h" />
     <ClInclude Include="..\Classes\Player\UserPlayer.h" />
+    <ClInclude Include="..\Classes\Stage\ActiveStage.h" />
+    <ClInclude Include="..\Classes\Stage\NullStage.h" />
+    <ClInclude Include="..\Classes\Stage\StageBase.h" />
+    <ClInclude Include="..\Classes\Stage\StageManager.h" />
+    <ClInclude Include="..\Classes\Stage\SteelStage.h" />
     <ClInclude Include="..\Classes\Tank\EnemyTank.h" />
     <ClInclude Include="..\Classes\Tank\MineTank.h" />
     <ClInclude Include="..\Classes\Tank\TankBase.h" />

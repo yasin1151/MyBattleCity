@@ -3,6 +3,7 @@
 
 #include <cocos2d.h>
 #include "GameLayer.h"
+#include "ChooseMenuLayer.h"
 
 USING_NS_CC;
 

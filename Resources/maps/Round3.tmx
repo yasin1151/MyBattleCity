@@ -5,12 +5,12 @@
  </tileset>
  <layer name="layer_0" width="26" height="26">
   <data encoding="base64" compression="zlib">
-   eJzdlckKwDAIRKXQBbpAF2j//0trIV4E25hooBmYg5CRJyQGoE7N6MWxJu3ow7HW8vXK81yxfC26KzDPiJ4KzJNaa3lIQ7A2H8tDajLzkrTzpiqXV+LU8ko5fk85p5ZXyvH+sbxSbSXipP5e94n3//s+qO3/+erjtd9S87nvw3Ket51kta8h9F7Rm8BqpYfvRF+gZ70BuxwO4A==
+   eJzdVdEKwzAITAfdHroUtha2///S2QfhEK25doSxg0NqNGpsTCn7qML5xLrFILw4+kW47vhl661g8z0KNt9ReHXkv2EA3gg/2zf9Rok2GoNFFEf7uRSut16euJ/C27MSeWN+KKN8rO9RMPeJqceCOfMz9fS6h5Pw7shfg+3Zt+fnDMz0FXT2PmVYgZm+x/vQMw7Wxp5bZDcmftkciuwtpgZfBlH9WT0sovq9etieIHQ+teyx6R/Cp2OTxdb51NLXTf8Svh2b7H/4AAVwCL8=
   </data>
  </layer>
  <layer name="layer_1" width="26" height="26">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFQxkwAzHLMLJnFIyCUTAKRsEoGAUjDwAAgvgADw==
+   eJztlDEKACAMA4W66P8f7GJASt2SKuJB1hxYTClvYkGqwNNm0K/09ESP931PDPpe8ljgqWRPW7J6EDboZ7F79ywPqxdR7Qr6cFe1x/8L1T2+h+Nhc8rD3keQtY+3MADy6gOs
   </data>
  </layer>
  <objectgroup name="objects" width="16" height="16">
@@ -18,12 +18,12 @@
   <object name="enemy2" x="208" y="16"/>
   <object name="enemy3" x="400" y="16"/>
   <object name="player1" x="160" y="400"/>
-  <object name="item1" x="285" y="236"/>
-  <object name="item2" x="136" y="239"/>
+  <object name="item1" x="269" y="239"/>
+  <object name="item2" x="140" y="306"/>
   <object name="mapLeftDownBegin" x="176" y="400"/>
-  <object name="item6" x="336" y="397"/>
-  <object name="item5" x="81" y="397"/>
+  <object name="item6" x="310" y="179"/>
+  <object name="item5" x="79" y="365"/>
   <object name="item3" x="16" y="239"/>
-  <object name="item4" x="398" y="239"/>
+  <object name="item4" x="399" y="370"/>
  </objectgroup>
 </map>

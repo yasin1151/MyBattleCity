@@ -59,7 +59,9 @@ void AIPlayerManager::collisionUpdate(Layer* layer, float dt)
 		{
 			AIPlayer* pBuf = static_cast<AIPlayer*>(*it);
 
-			if (pBullet->getSprite()->getBoundingBox().intersectsRect(
+			if (
+				pBullet->getSprite()->isVisible() && 
+				pBullet->getSprite()->getBoundingBox().intersectsRect(
 				pBuf->getTank()->getNextMoveRect()))
 			{
 				//发生碰撞
@@ -159,7 +161,9 @@ void AIPlayerManager::collisionUpdate(Layer* layer, float dt)
 			it_bullet != bulletList.end(); )
 		{
 			BulletBase* pBullet = *it_bullet;
-			if (pBullet->getSprite()->getBoundingBox().intersectsRect(
+			if (
+				pBullet->getSprite()->isVisible() && 
+				pBullet->getSprite()->getBoundingBox().intersectsRect(
 				m_pUserTank->getNextMoveRect()))
 			{
 				//用户被攻击
@@ -173,7 +177,8 @@ void AIPlayerManager::collisionUpdate(Layer* layer, float dt)
 
 				//将子弹从列表中移除
 				it_bullet = bulletList.erase(it_bullet);
-				
+
+				break;
 			}
 			else
 			{

@@ -74,7 +74,7 @@ bool BulletBase::bulletCollision()
 	//遍历arrVec
 	for (int i = 0; i < 4; i++)
 	{
-		switch (gid2Type[pLayer->tileGIDAt(arrVec[i])])
+		switch (gid2Type[pLayer->getTileGIDAt(arrVec[i])])
 		{
 		case MapWall:
 			//消除方块
@@ -92,7 +92,7 @@ bool BulletBase::bulletCollision()
 			break;
 		case MapHome:
 			//游戏结束
-			CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+			CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 			Director::getInstance()->replaceScene(GameOverLayer::createScene());
 			break;
 		}

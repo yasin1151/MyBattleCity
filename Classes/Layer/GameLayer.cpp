@@ -1,5 +1,6 @@
 #include "GameLayer.h"
 #include <SimpleAudioEngine.h>
+#include "MenuLayer.h"
 
 GameLayer* GameLayer::create(int roundNum)
 {
@@ -46,33 +47,13 @@ bool GameLayer::init(int roundNum)
 	m_pTankFactory = new TankFactory(m_pMap, Vec2(1, 1));
 
 	//初始化玩家
-	Size mapSize = m_pMap->getTiledMap()->getContentSize();
-	Size tileSize = m_pMap->getTiledMap()->getTileSize();
-	m_pPlayer = createPlayer(MineTankA, 1, 
-		Vec2(mapSize.width / 2 - tileSize.width * 3, tileSize.height));
-	m_pMap->getTiledMap()->addChild(m_pPlayer->getTank()->getSprite());
+	initPlayer();
 
+	//初始话ai玩家
+	initAIPlayer();
 
-	//初始化ai管理对象
-	m_pAIMgr = new AIPlayerManager();
-	m_pAIMgr->setUserTank(m_pPlayer->getTank());
-
-	//创建ai玩家
-	m_arrAIPos.push_back(Vec2(tileSize.width, mapSize.height - tileSize.height));
-	m_arrAIPos.push_back(Vec2(mapSize.width / 2, mapSize.height - tileSize.height));
-	m_arrAIPos.push_back(Vec2(mapSize.width - tileSize.width, 
-		mapSize.height - tileSize.height));
-
-	for (int i = 0; i < 3; i++)
-	{
-		Player* pTmpPlayer = createPlayer(static_cast<TankType>(i), 2, m_arrAIPos[i]);
-
-		m_pMap->getTiledMap()->addChild(pTmpPlayer->getTank()->getSprite());
-
-		m_pAIMgr->addAiPlayer(pTmpPlayer);
-
-		m_pHudLayer->setRemainEnemyNum(m_pHudLayer->getRemainEnemyNum() - 1);
-	}
+	//初始化道具管理对象
+	initStage();
 
 	//开启调度器
 	this->scheduleUpdate();
@@ -80,8 +61,15 @@ bool GameLayer::init(int roundNum)
 	//开启ai创建器
 	this->schedule(schedule_selector(GameLayer::aiCreator), 3.0f, -1, 5.0f);
 
-	//开启声音
+	//开启道具创建器
+	this->schedule(schedule_selector(GameLayer::stageCreateUpdate), 6.0f, -1, 3.0f);
+
+	//开启背景音乐
 	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("music/start.aif", true);
+
+	//设置背景音乐
+	CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.1f);
+	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.1f);
 	
 	return true;
 }
@@ -96,27 +84,31 @@ GameLayer::~GameLayer()
 
 	CC_SAFE_DELETE(m_pAIMgr);
 
+	CC_SAFE_DELETE(m_pStageMgr);
 }
 
 void GameLayer::update(float dt)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	//处理键盘连击
-	for (auto it = m_listKeyCode.begin();
-		it != m_listKeyCode.end();
-		++it)
+	for (auto it : m_listKeyCode)
 	{
-
-		KeyboardCallBack(*it);
+		KeyboardCallBack(it);
 	}
 #endif
+
 	rockerUpdate(dt);
 
 	m_pAIMgr->aiUpdte(this, dt);
 	
 	m_pAIMgr->collisionUpdate(this, dt);
 
+	m_pStageMgr->update(m_pPlayer, dt);
 
+}
+
+void GameLayer::stageCreateUpdate(float dt)
+{
+	m_pStageMgr->createStage(m_pMap);
 }
 
 void GameLayer::rockerUpdate(float dt)
@@ -228,44 +220,8 @@ bool GameLayer::initMap(const char* fileName)
 
 bool GameLayer::initMenu()
 {
-	//创建按钮
-
-	//MenuItemFont* itemRight =
-	//	MenuItemFont::create("Ri", this, menu_selector(GameLayer::RightCallBack));
-	//itemRight->setPosition(Vec2(130, 100));
-
-	//MenuItemFont* itemLeft =
-	//	MenuItemFont::create("Le", this, menu_selector(GameLayer::LeftCallBack));
-	//itemLeft->setPosition(Vec2(50, 100));
-
-	//MenuItemFont* itemUp =
-	//	MenuItemFont::create("Up", this, menu_selector(GameLayer::UpCallBack));
-	//itemUp->setPosition(Vec2(90, 150));
-
-	//MenuItemFont* itemDown =
-	//	MenuItemFont::create("Do", this, menu_selector(GameLayer::DownCallBack));
-	//itemDown->setPosition(Vec2(90, 100));
-
-//	MenuItemFont* itemRight =
-//		MenuItemFont::create(yUtils::GBK2UTF("右").c_str(), this, menu_selector(GameLayer::RightCallBack));
-//	itemRight->setPosition(Vec2(130, 100));
-//
-//	MenuItemFont* itemLeft =
-//		MenuItemFont::create(yUtils::GBK2UTF("左").c_str(), this, menu_selector(GameLayer::LeftCallBack));
-//	itemLeft->setPosition(Vec2(50, 100));
-//
-//	MenuItemFont* itemUp =
-//		MenuItemFont::create(yUtils::GBK2UTF("上").c_str(), this, menu_selector(GameLayer::UpCallBack));
-//	itemUp->setPosition(Vec2(90, 150));
-//
-//	MenuItemFont* itemDown =
-//		MenuItemFont::create(yUtils::GBK2UTF("下").c_str(), this, menu_selector(GameLayer::DownCallBack));
-//	itemDown->setPosition(Vec2(90, 100));
-
-//	MenuItemFont* itemExit =
-//		MenuItemFont::create(yUtils::GBK2UTF("退出游戏").c_str(),  
 	MenuItemFont* itemExit =
-		MenuItemFont::create("back",
+		MenuItemFont::create("ExitGame",
 		[&](Ref* ref)
 	{
 		Director::getInstance()->end();
@@ -275,7 +231,18 @@ bool GameLayer::initMenu()
 #endif
 
 	});
-	itemExit->setPosition(Vec2(90, 400));
+	itemExit->setPosition(Vec2(90, 330));
+
+
+	MenuItemFont* itemBack =
+		MenuItemFont::create("BackMenu",
+		[&](Ref* ref)
+	{
+		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+		Director::getInstance()->replaceScene(MenuLayer::createScene());
+	});
+	itemBack->setPosition(Vec2(90, 400));
+
 
 
 	MenuItemImage* fireBtn =
@@ -284,8 +251,7 @@ bool GameLayer::initMenu()
 		CC_CALLBACK_1(GameLayer::ShotCallBack, this));
 	fireBtn->setPosition(Vec2(Director::getInstance()->getWinSize().width - fireBtn->getContentSize().width / 2 - 20, 100));
 
-	//Menu* menu = Menu::create(itemRight, itemLeft, itemUp, itemDown, itemExit, fireBtn, NULL);
-	Menu* menu = Menu::create(itemExit, fireBtn, NULL);
+	Menu* menu = Menu::create(itemExit, itemBack, fireBtn, NULL);
 	menu->setPosition(0, 0);
 	menu->setAnchorPoint(Vec2(0, 0));
 
@@ -294,7 +260,100 @@ bool GameLayer::initMenu()
 	return true;
 }
 
+bool GameLayer::initAIPlayer()
+{
+	Size mapSize = m_pMap->getTiledMap()->getContentSize();
+	Size tileSize = m_pMap->getTiledMap()->getTileSize();
 
+	//从地图中初始化aiPos数组
+	TMXObjectGroup* pObjects = m_pMap->getTiledMap()->getObjectGroup("objects");
+
+	//获取对应
+	for (int i = 0; i < 3; i++)
+	{
+
+		ValueMap vEnemy = pObjects->getObject(CCString::createWithFormat("enemy%d", i + 1)->getCString());
+		
+		int x = vEnemy["x"].asInt();
+		
+		int y = vEnemy["y"].asInt();
+
+		m_arrAIPos.push_back(Vec2(x, y));
+	}
+
+	//初始化ai管理对象
+	m_pAIMgr = new AIPlayerManager();
+	m_pAIMgr->setUserTank(m_pPlayer->getTank());
+
+	//创建ai玩家
+	m_arrAIPos.push_back(Vec2(tileSize.width, mapSize.height - tileSize.height));
+	m_arrAIPos.push_back(Vec2(mapSize.width / 2, mapSize.height - tileSize.height));
+	m_arrAIPos.push_back(Vec2(mapSize.width - tileSize.width,
+		mapSize.height - tileSize.height));
+
+	for (int i = 0; i < 3; i++)
+	{
+		Player* pTmpPlayer = createPlayer(static_cast<TankType>(i), 2, m_arrAIPos[i]);
+
+		m_pMap->getTiledMap()->addChild(pTmpPlayer->getTank()->getSprite());
+
+		m_pAIMgr->addAiPlayer(pTmpPlayer);
+
+		m_pHudLayer->setRemainEnemyNum(m_pHudLayer->getRemainEnemyNum() - 1);
+	}
+
+	return true;
+}
+
+bool GameLayer::initPlayer()
+{
+	Size mapSize = m_pMap->getTiledMap()->getContentSize();
+	Size tileSize = m_pMap->getTiledMap()->getTileSize();
+
+	//从地图中初始化palyer位置
+	TMXObjectGroup* pObjects = m_pMap->getTiledMap()->getObjectGroup("objects");
+	ValueMap vPos = pObjects->getObject("player1");
+
+	int x = vPos["x"].asInt();
+	int y = vPos["y"].asInt();
+
+	Vec2 vBuf = Vec2(x, y);
+
+
+	m_pPlayer = createPlayer(MineTankA, 1, vBuf);
+	m_pMap->getTiledMap()->addChild(m_pPlayer->getTank()->getSprite());
+
+	return true;
+}
+
+bool GameLayer::initStage()
+{
+
+	//实例化一个管理类对象
+	m_pStageMgr = new StageManager();
+
+	//获取道具随机出现的位置
+	TMXObjectGroup* pObjects = m_pMap->getTiledMap()->getObjectGroup("objects");
+
+	int i = 1;
+	while (true)
+	{
+		ValueMap vPos = pObjects->getObject(CCString::createWithFormat("item%d", i++)->getCString());
+
+		if (vPos.empty())
+		{
+			break;
+		}
+
+		int x = vPos["x"].asInt();
+		int y = vPos["y"].asInt();
+
+		//加入随机坐标到道具管理类中
+		m_pStageMgr->pushPos(Vec2(x, y));
+	}
+
+	return true;
+}
 
 bool GameLayer::initKeyboardEvent()
 {
@@ -304,6 +363,7 @@ bool GameLayer::initKeyboardEvent()
 	//键盘按键按下时的响应
 	myKeyListener->onKeyPressed = [&](EventKeyboard::KeyCode keycode, cocos2d::Event *event)
 	{
+		//对发射子弹特殊处理
 		if (EventKeyboard::KeyCode::KEY_J == keycode)
 		{
 			ShotCallBack(nullptr);

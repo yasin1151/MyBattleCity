@@ -17,10 +17,7 @@ bool MenuLayer::init()
 
 	MenuItemFont* itemPlayGame = MenuItemFont::create("Play Game", [&](Ref* ref)
 	{
-		Scene* scene = Scene::create();
-		GameLayer* layer = GameLayer::create(1);
-		scene->addChild(layer);
-		Director::getInstance()->replaceScene(scene);
+		Director::getInstance()->replaceScene(ChooseMenuLayer::createScene());
 	});
 	itemPlayGame->setPosition(visibleSize.width / 2, visibleSize.height * 3 / 7);
 

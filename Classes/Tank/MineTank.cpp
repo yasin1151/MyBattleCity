@@ -14,16 +14,18 @@ void MineTank::beAtked()
 	if (--m_iLife <= 0)
 	{
 		//游戏结束
-		CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 		Director::getInstance()->replaceScene(GameOverLayer::createScene());
 		return;
 	}
 
 	//添加动画事件
-	Animate* ani = createBeAtkedAnimate(5, 0.5f);
-	
-	//运行该动画事件
-	this->m_spTank->runAction(ani);
+	m_spTank->runAction(Repeat::create(
+		Sequence::create(
+		FadeOut::create(0.2f),
+		FadeIn::create(0.2f),
+		NULL),
+		3));
 }
 
 Animate* MineTank::createBeAtkedAnimate(unsigned loops, float delayTime)
