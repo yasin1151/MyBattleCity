@@ -27,6 +27,8 @@ bool ChooseMenuLayer::init()
 	//读取配置
 	m_vConfig = FileUtils::getInstance()->getValueMapFromFile("Config/ChooseMenuConfig.xml");
 
+	m_iSeq = 0;
+
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
 	//创建一个talbleview 将datasource设置为当前的类的对象 tableview的显示区域大小为 
@@ -86,26 +88,22 @@ Size ChooseMenuLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 
 TableViewCell* ChooseMenuLayer::tableCellAtIndex(TableView *table, ssize_t idx)
 {
-	//顺序
-	static int iSeq = 0;
 
-	log("tableCellAtIndex idx : %d", idx);
 	TableViewCell *cell = table->dequeueCell();
-
 
 	if (!cell) {
 		cell = new (std::nothrow) TableViewCell();
 		cell->autorelease();
 
 		//创建缩略图
-		TMXTiledMap* pMap = TMXTiledMap::create(CCString::createWithFormat("maps/Round%d.tmx", iSeq + 1)->getCString());
+		TMXTiledMap* pMap = TMXTiledMap::create(CCString::createWithFormat("maps/Round%d.tmx", m_iSeq + 1)->getCString());
 		float rota = static_cast<float>(m_vConfig["SmallHeight"].asInt()) / pMap->getContentSize().width;
 		pMap->setScale(rota);
 		pMap->setPosition(Vec2::ZERO);
 		pMap->setAnchorPoint(Vec2::ZERO);
 
 		//创建文字
-		auto label = Label::createWithSystemFont(CCString::createWithFormat("Round %d", iSeq + 1)->getCString(), "Helvetica", 25);
+		auto label = Label::createWithSystemFont(CCString::createWithFormat("Round %d", m_iSeq + 1)->getCString(), "Helvetica", 25);
 		label->setPosition(m_vConfig["SmallWidth"].asInt() / 4 - 10, 0);
 		label->setAnchorPoint(Vec2::ZERO);
 		label->setTag(123);
@@ -113,7 +111,7 @@ TableViewCell* ChooseMenuLayer::tableCellAtIndex(TableView *table, ssize_t idx)
 		cell->addChild(pMap);
 		cell->addChild(label);
 
-		iSeq++;
+		m_iSeq++;
 	}
 
 	return cell;

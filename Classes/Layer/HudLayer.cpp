@@ -38,6 +38,10 @@ bool HudLayer::init(int iCurLevel, int iLife, int iEnemyNum)
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
+
+	//读取配置
+	ValueMap vConfig = FileUtils::getInstance()->getValueMapFromFile("Config/HudeLayerConfig.xml");
+
 	m_iCurLevel = iCurLevel;
 	m_iLife = iLife;
 	m_iEnemyNum = iEnemyNum;
@@ -49,7 +53,7 @@ bool HudLayer::init(int iCurLevel, int iLife, int iEnemyNum)
 
 	//创建分数label
 	Label* scoreLatter = Label::create();
-	scoreLatter->setString("Scroe : ");
+	scoreLatter->setString(vConfig["ScoreLabel"].asString());
 	scoreLatter->setSystemFontSize(25);
 	scoreLatter->setPosition(visibleSize.width - 130, visibleSize.height - 30);
 	this->addChild(scoreLatter);
@@ -79,7 +83,7 @@ bool HudLayer::init(int iCurLevel, int iLife, int iEnemyNum)
 
 	//创建生命label
 	Label* lifeLetter = Label::create();
-	lifeLetter->setString("Life : ");
+	lifeLetter->setString(vConfig["LifeLabel"].asString());
 	lifeLetter->setPosition(visibleSize.width - 120, visibleSize.height / 4);
 	lifeLetter->setSystemFontSize(25);
 	lifeLetter->setAlignment(TextHAlignment::LEFT);
@@ -96,8 +100,8 @@ bool HudLayer::init(int iCurLevel, int iLife, int iEnemyNum)
 
 	//创建关卡等级label
 	Label* levelLetter = Label::create();
-	levelLetter->setString("Level : ");
-	levelLetter->setPosition(visibleSize.width - 128, visibleSize.height / 6);
+	levelLetter->setString(vConfig["LevelLabel"].asString());
+	levelLetter->setPosition(visibleSize.width - 120, visibleSize.height / 6);
 	levelLetter->setSystemFontSize(25);
 	levelLetter->setAlignment(TextHAlignment::LEFT);
 	this->addChild(levelLetter);

@@ -23,6 +23,9 @@ bool GameLayer::init(int roundNum)
 		return false;
 	}
 
+	//读取配置文件
+	m_vConfig = FileUtils::getInstance()->getValueMapFromFile("Config/GameLayerConfig.xml");
+
 	//创建一个灰色背景
 	this->addChild(LayerColor::create(Color4B::GRAY), -100);
 
@@ -30,7 +33,7 @@ bool GameLayer::init(int roundNum)
 	initMap(String::createWithFormat("maps/Round%d.tmx", roundNum)->getCString());
 
 	//初始化ui层
-	m_pHudLayer = HudLayer::create(1, 4, 20);
+	m_pHudLayer = HudLayer::create(roundNum, m_vConfig["UserLifeNum"].asInt(), m_vConfig["EnemyTankNum"].asInt());
 	this->addChild(m_pHudLayer, 100);
 
 	//初始化摇杆对象
@@ -44,7 +47,8 @@ bool GameLayer::init(int roundNum)
 	initKeyboardEvent();
 
 	//初始化坦克工厂对象
-	m_pTankFactory = new TankFactory(m_pMap, Vec2(1, 1));
+	m_pTankFactory = new TankFactory(m_pMap, 
+		Vec2(m_vConfig["TankSpeedX"].asInt(), m_vConfig["TankSpeedY"].asInt()));
 
 	//初始化玩家
 	initPlayer();
@@ -59,10 +63,12 @@ bool GameLayer::init(int roundNum)
 	this->scheduleUpdate();
 
 	//开启ai创建器
-	this->schedule(schedule_selector(GameLayer::aiCreator), 3.0f, -1, 5.0f);
+	this->schedule(schedule_selector(GameLayer::aiCreator), 
+		m_vConfig["AICreateInterval"].asInt(), -1, m_vConfig["FirstAICreateDelay"].asInt());
 
 	//开启道具创建器
-	this->schedule(schedule_selector(GameLayer::stageCreateUpdate), 6.0f, -1, 3.0f);
+	this->schedule(schedule_selector(GameLayer::stageCreateUpdate), 
+		m_vConfig["StageCreateInterval"].asInt(), -1, m_vConfig["FirstStageCreateDelay"].asInt());
 
 	//开启背景音乐
 	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("music/start.aif", true);
@@ -132,13 +138,13 @@ void GameLayer::rockerUpdate(float dt)
 
 void GameLayer::aiCreator(float dt)
 {
-	//只会创建20个敌人
+	//根据配置创建敌人
 	if (0 >= m_pHudLayer->getRemainEnemyNum())
 	{
 		this->unschedule(schedule_selector(GameLayer::aiCreator));
 	}
 	//场上最多存在6个ai
-	else if (6 <= m_pAIMgr->getAIPlayerNum())
+	else if (m_vConfig["MaxOnlineAI"].asInt() <= m_pAIMgr->getAIPlayerNum())
 	{
 		return;
 	}
@@ -167,6 +173,7 @@ Player* GameLayer::createPlayer(const TankType& tankType, int playerType, const 
 	case 1:
 		//创建普通玩家
 		pRet = new UserPlayer(pTankBase);
+		static_cast<MineTank*>(pRet->getTank())->setLife(m_vConfig["UserLifeNum"].asInt());
 		break;
 	case 2:
 		//创建ai玩家
@@ -221,7 +228,7 @@ bool GameLayer::initMap(const char* fileName)
 bool GameLayer::initMenu()
 {
 	MenuItemFont* itemExit =
-		MenuItemFont::create("ExitGame",
+		MenuItemFont::create(m_vConfig["ExitGameString"].asString(),
 		[&](Ref* ref)
 	{
 		Director::getInstance()->end();
@@ -235,7 +242,7 @@ bool GameLayer::initMenu()
 
 
 	MenuItemFont* itemBack =
-		MenuItemFont::create("BackMenu",
+		MenuItemFont::create(m_vConfig["BackMenuString"].asString(),
 		[&](Ref* ref)
 	{
 		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();

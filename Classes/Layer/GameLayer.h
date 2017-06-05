@@ -47,6 +47,9 @@ private:
 
 	//道具管理类
 	StageManager* m_pStageMgr;
+
+	//当前层的配置文件
+	ValueMap m_vConfig;
 public:
 	//roundNum : 关卡数目，1~n
 	static GameLayer* create(int roundNum);

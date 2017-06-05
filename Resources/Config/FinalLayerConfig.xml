@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>BackGameString</key>
+	<string>返回主菜单</string>
+    <key>WinString</key>
+	<string>恭喜你获得胜利！</string>
+</dict>
+</plist>

@@ -22,24 +22,20 @@ bool GameOverLayer::init()
 	}
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
+	//读取配置
+	ValueMap vConfig = FileUtils::getInstance()->getValueMapFromFile("Config/FinalLayerConfig.xml");
 
 	Sprite* spGameOver = Sprite::create("res/gameover.png");
 	this->addChild(spGameOver);
 	spGameOver->setPosition(visibleSize.width / 2, visibleSize.height * 3 / 4);
 
 
-	MenuItemFont* itemRePlay = MenuItemFont::create("back MainMenu", [&](Ref* ref)
+	MenuItemFont* itemRePlay = MenuItemFont::create(vConfig["BackGameString"].asString(), [&](Ref* ref)
 	{
 		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 		Director::getInstance()->replaceScene(MenuLayer::createScene());
 	});
 
-
-//	MenuItemFont* itemRePlay = MenuItemFont::create(yUtils::GBK2UTF("返回主界面").c_str(), [&](Ref* ref)
-//	{
-//		CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
-//		Director::getInstance()->replaceScene(MenuLayer::createScene());
-//	});
 
 	itemRePlay->setPosition(visibleSize.width / 2, visibleSize.height / 4);
 	Menu* menu = Menu::create(itemRePlay, NULL);

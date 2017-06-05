@@ -167,6 +167,10 @@ void AIPlayerManager::collisionUpdate(Layer* layer, float dt)
 				//用户被攻击
 				m_pUserTank->beAtked();
 
+				//设置hud层的life显示
+				pLayer->getHudLayer()->setLifeNum(
+					static_cast<MineTank*>(m_pUserTank)->getLife() - 1);
+
 				//子弹消失
 				pBufBulletMgr->getMemPool().release(pBullet);
 

@@ -18,6 +18,10 @@ class ChooseMenuLayer : public Layer,
 private:
 	//本层的配置对象
 	ValueMap m_vConfig;
+
+	//用于标识顺序
+	int m_iSeq;
+
 public:
 	virtual ~ChooseMenuLayer() override;
 

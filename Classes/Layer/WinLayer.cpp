@@ -21,14 +21,18 @@ bool WinLayer::init()
 	}
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
+	//读取配置
+	ValueMap vConfig = FileUtils::getInstance()->getValueMapFromFile("Config/FinalLayerConfig.xml");
+
+
 	Label* pLabel = Label::create();
-	pLabel->setString("You Win!");
+	pLabel->setString(vConfig["WinString"].asString());
 	pLabel->setSystemFontSize(32);
 	this->addChild(pLabel);
 	pLabel->setPosition(visibleSize.width / 2, visibleSize.height * 3 / 4);
 
 
-	MenuItemFont* itemRePlay = MenuItemFont::create(yUtils::GBK2UTF("返回主界面").c_str(), [&](Ref* ref)
+	MenuItemFont* itemRePlay = MenuItemFont::create(vConfig["BackGameString"].asString(), [&](Ref* ref)
 	{
 		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 		Director::getInstance()->replaceScene(MenuLayer::createScene());

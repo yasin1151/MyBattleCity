@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MaxMapCount</key>
+	<integer>3</integer>
+    <key>SmallWidth</key>
+    <integer>250</integer>
+    <key>SmallHeight</key>
+    <integer>200</integer>
+    <key>TableViewShowWidth</key>
+    <integer>500</integer>
+    <key>TableViewShowHeight</key>
+    <integer>200</integer>
+    <key>TableViewPosX</key>
+    <integer>200</integer>
+    <key>TableViewPosY</key>
+    <integer>130</integer>
+    <key>SelectLabel</key>
+    <string>滑动来选择关卡</string>
+    <key>FontSize</key>
+    <integer>30</integer>
+</dict>
+</plist>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UserLifeNum</key>
+	<integer>10</integer>
+    <key>EnemyTankNum</key>
+	<integer>20</integer>
+    <key>MaxOnlineAI</key>
+	<integer>5</integer>
+    <key>StageCreateInterval</key>
+	<integer>6</integer>
+    <key>FirstStageCreateDelay</key>
+	<integer>3</integer>
+    <key>AICreateInterval</key>
+	<integer>3</integer>
+    <key>FirstAICreateDelay</key>
+	<integer>5</integer>
+    <key>TankSpeedX</key>
+	<integer>2</integer>
+    <key>TankSpeedY</key>
+	<integer>2</integer>
+    <key>ExitGameString</key>
+	<string>退出游戏</string>
+    <key>BackMenuString</key>
+	<string>返回菜单</string>
+</dict>
+</plist>

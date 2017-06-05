@@ -104,6 +104,10 @@ public:
 	//获取玩家的生命数目
 	void setLifeNum(int iLife)
 	{
+		if (iLife < 0)
+		{
+			iLife = 0;
+		}
 		m_iLife = iLife;
 		m_bIsUpdata = true;
 	}

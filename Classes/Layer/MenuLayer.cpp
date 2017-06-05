@@ -11,17 +11,22 @@ bool MenuLayer::init()
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
+
+	//¶ÁÈ¡ÅäÖÃ
+	ValueMap vConfig = FileUtils::getInstance()->getValueMapFromFile("Config/MenuLayerConfig.xml");
+
+
 	Sprite* spLogo = Sprite::create("res/BattleCity.png");
 	spLogo->setPosition(visibleSize.width / 2, visibleSize.height * 3 / 4);
 	this->addChild(spLogo);
 
-	MenuItemFont* itemPlayGame = MenuItemFont::create("Play Game", [&](Ref* ref)
+	MenuItemFont* itemPlayGame = MenuItemFont::create(vConfig["PlayGameString"].asString(), [&](Ref* ref)
 	{
 		Director::getInstance()->replaceScene(ChooseMenuLayer::createScene());
 	});
 	itemPlayGame->setPosition(visibleSize.width / 2, visibleSize.height * 3 / 7);
 
-	MenuItemFont* itemExitGame = MenuItemFont::create("Exit Game", [&](Ref* ref)
+	MenuItemFont* itemExitGame = MenuItemFont::create(vConfig["ExitGameString"].asString(), [&](Ref* ref)
 	{
 		
 
