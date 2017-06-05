@@ -37,7 +37,7 @@ bool GameLayer::init(int roundNum)
 	this->addChild(m_pHudLayer, 100);
 
 	//初始化摇杆对象
-	m_pRocker = Rocker4A::create("Rocker/Direction_bc.png", "Rocker/Direction_bt.png", Vec2(100, 100));
+	m_pRocker = Rocker4AWithTrans::create("Rocker/Direction_bc.png", "Rocker/Direction_bt.png", Vec2(100, 100),  ROCKER_LD);
 	this->addChild(m_pRocker);
 
 	//初始化菜单

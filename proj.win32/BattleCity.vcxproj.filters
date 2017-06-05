@@ -105,9 +105,6 @@
     <ClCompile Include="..\Classes\Layer\WinLayer.cpp">
       <Filter>src\Layer</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\yUtils\cocos\Rocker4A.cpp">
-      <Filter>src\yUtils\cocos</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\yUtils\cocos\RockerBase.cpp">
       <Filter>src\yUtils\cocos</Filter>
     </ClCompile>
@@ -125,6 +122,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Layer\ChooseMenuLayer.cpp">
       <Filter>src\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\yUtils\cocos\Rocker4AWithTrans.cpp">
+      <Filter>src\yUtils\cocos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\yUtils\cocos\Rocker4A.cpp">
+      <Filter>src\yUtils\cocos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,9 +203,6 @@
     <ClInclude Include="..\Classes\Layer\WinLayer.h">
       <Filter>src\Layer</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\yUtils\cocos\Rocker4A.h">
-      <Filter>src\yUtils\cocos</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\yUtils\cocos\RockerBase.h">
       <Filter>src\yUtils\cocos</Filter>
     </ClInclude>
@@ -223,6 +223,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Layer\ChooseMenuLayer.h">
       <Filter>src\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\yUtils\cocos\Rocker4AWithTrans.h">
+      <Filter>src\yUtils\cocos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\yUtils\cocos\Rocker4A.h">
+      <Filter>src\yUtils\cocos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -11,7 +11,7 @@
 #include "Player\AIPlayer.h"
 #include "Tank\TankFactory.h"
 #include "Player\AIPlayerManager.h"
-#include "yUtils\cocos\Rocker4A.h"
+#include "yUtils\cocos\Rocker4AWithTrans.h"
 #include "Stage\StageManager.h"
 USING_NS_CC;
 
@@ -43,7 +43,7 @@ private:
 	std::list<EventKeyboard::KeyCode> m_listKeyCode;
 
 	//摇杆对象
-	Rocker4A* m_pRocker;
+	Rocker4AWithTrans* m_pRocker;
 
 	//道具管理类
 	StageManager* m_pStageMgr;

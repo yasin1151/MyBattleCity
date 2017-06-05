@@ -17,9 +17,9 @@
     <key>FirstAICreateDelay</key>
 	<integer>5</integer>
     <key>TankSpeedX</key>
-	<integer>2</integer>
+	<integer>1</integer>
     <key>TankSpeedY</key>
-	<integer>2</integer>
+	<integer>1</integer>
     <key>ExitGameString</key>
 	<string>退出游戏</string>
     <key>BackMenuString</key>
