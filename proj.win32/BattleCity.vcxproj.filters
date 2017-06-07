@@ -129,6 +129,9 @@
     <ClCompile Include="..\Classes\yUtils\cocos\Rocker4A.cpp">
       <Filter>src\yUtils\cocos</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Layer\CalcCountLayer.cpp">
+      <Filter>src\Layer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -229,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\yUtils\cocos\Rocker4A.h">
       <Filter>src\yUtils\cocos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Layer\CalcCountLayer.h">
+      <Filter>src\Layer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -31,6 +31,7 @@ bool GameLayer::init(int roundNum)
 
 	//初始化地图
 	initMap(String::createWithFormat("maps/Round%d.tmx", roundNum)->getCString());
+	m_iCurRoundNum = roundNum;
 
 	//初始化ui层
 	m_pHudLayer = HudLayer::create(roundNum, m_vConfig["UserLifeNum"].asInt(), m_vConfig["EnemyTankNum"].asInt());

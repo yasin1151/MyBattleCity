@@ -1,6 +1,7 @@
 #include "ChooseMenuLayer.h"
 #include "MenuLayer.h"
 #include "GameLayer.h"
+#include "CalcCountLayer.h"
 
 ChooseMenuLayer::~ChooseMenuLayer()
 {
@@ -30,6 +31,9 @@ bool ChooseMenuLayer::init()
 	m_iSeq = 0;
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
+
+	//设置过关界面参数
+	CalcCountLayer::setMaxLevelCount(m_vConfig["MaxMapCount"].asInt());
 
 	//创建一个talbleview 将datasource设置为当前的类的对象 tableview的显示区域大小为 
 	TableView* tableView = TableView::create(this, Size(m_vConfig["TableViewShowWidth"].asInt(),

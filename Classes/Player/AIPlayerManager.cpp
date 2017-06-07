@@ -2,6 +2,7 @@
 #include "Layer\GameLayer.h"
 #include <Layer/WinLayer.h>
 #include <SimpleAudioEngine.h>
+#include "Layer\CalcCountLayer.h"
 
 
 AIPlayerManager::AIPlayerManager()
@@ -110,7 +111,9 @@ void AIPlayerManager::collisionUpdate(Layer* layer, float dt)
 					if (m_listAIPlayer.empty() && pLayer->getHudLayer()->getRemainEnemyNum() <= 0)
 					{
 						//Ê¤Àû
-						Director::getInstance()->replaceScene(WinLayer::createScene());
+						Director::getInstance()->replaceScene(CalcCountLayer::createScene(
+							pLayer->getHudLayer()->getScore(),
+							pLayer->getHudLayer()->getCurLevel()));
 					}
 
 					

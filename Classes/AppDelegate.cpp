@@ -3,6 +3,7 @@
 #include "Layer\GameLayer.h"
 #include "Layer\MenuLayer.h"
 #include <SimpleAudioEngine.h>
+#include "Layer\CalcCountLayer.h"
 
 USING_NS_CC;
 
@@ -84,7 +85,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	scene->addChild(MenuLayer::create());
 
     // run
-    director->runWithScene(scene);
+	director->runWithScene(scene);
 
     return true;
 }

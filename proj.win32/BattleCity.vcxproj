@@ -148,6 +148,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Bullet\BulletBase.cpp" />
     <ClCompile Include="..\Classes\Bullet\BulletManager.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\Layer\CalcCountLayer.cpp" />
     <ClCompile Include="..\Classes\Layer\ChooseMenuLayer.cpp" />
     <ClCompile Include="..\Classes\Layer\GameLayer.cpp" />
     <ClCompile Include="..\Classes\Layer\GameOverLayer.cpp" />
@@ -179,6 +180,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Bullet\BulletManager.h" />
     <ClInclude Include="..\Classes\Common\Common.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\Layer\CalcCountLayer.h" />
     <ClInclude Include="..\Classes\Layer\ChooseMenuLayer.h" />
     <ClInclude Include="..\Classes\Layer\GameLayer.h" />
     <ClInclude Include="..\Classes\Layer\GameOverLayer.h" />

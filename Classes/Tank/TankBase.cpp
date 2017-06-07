@@ -92,12 +92,24 @@ void TankBase::command(const TankCommandType& type)
 		nextRect.size
 		);
 
+	Vec2 offsetPos = Vec2::ZERO;
+
 	//Åö×²¼ì²â
-	if (m_pMap->isCollision(nextRect, [](int gid){return gid != 0;}))
+	if (m_pMap->isCollision(nextRect, offsetPos))
 	{
+//		if (Vec2::ZERO != offsetPos)
+//		{
+//			m_bIsCanMoved = true;
+//			m_rNextMoveRect = Rect(
+//				nextRect.origin + offsetPos,
+//				nextRect.size
+//				);
+//			return;
+//		}	
+
 		m_bIsCanMoved = false;
 		return;
-	}
+	} 
 
 	m_bIsCanMoved = true;
 	m_rNextMoveRect = nextRect;

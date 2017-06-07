@@ -31,87 +31,10 @@ public:
 	//获取瓦片地图对象
 	TMXTiledMap* getTiledMap();
 
-	//检测碰撞，true为碰撞，false为无碰撞, 可以指定碰撞函数
-	template <typename CollisionFunc>
-	bool isCollision(const Rect& tankBoundingBox, CollisionFunc func = [=](int gid){return gid != 0; });
+	//检测碰撞，true为碰撞，false为无碰撞，传入一个Vec&， 可以对当前位置进行修正，优化用户体验
+	bool isCollision(const Rect& tankBoundingBox, Vec2& offsetPos);
 };
 
 
-
-template <typename CollisionFunc>
-bool TankTiledMap::isCollision(const Rect& tankBoundingBox, CollisionFunc func)
-{
-	//log("isCollision");
-	int gid = 0;
-	//地图大小
-	Size mapSize = m_pMap->getContentSize();
-	//每一片瓦片的大小
-	Size tileSize = m_pMap->getTileSize();
-
-	//越界检测
-	if (tankBoundingBox.getMinX() < 0.01 || tankBoundingBox.getMaxX() >= mapSize.width ||
-		tankBoundingBox.getMinY() < 0.01 || tankBoundingBox.getMaxY() >= mapSize.height)
-	{
-		return true;
-	}
-
-	//将cocos坐标系，转换为tiled坐标系
-	int minY = mapSize.height - tankBoundingBox.getMinY();
-	int maxY = mapSize.height - tankBoundingBox.getMaxY();
-
-	//坦克只占用4个格子
-	//所以只用进行4个顶点的碰撞检测
-
-	//1.1 获取左上角tileMapGid
-	gid = m_pLayer0->getTileGIDAt(Vec2(
-		static_cast<int>(tankBoundingBox.getMinX() / tileSize.width),
-		static_cast<int>(maxY / tileSize.height)));
-
-	//log("collision1 gid : %d", gid); 
-
-	//1.2 判断gid是否为空，或者特殊值
-	if (func(gid))
-	{
-		return true;
-	}
-
-	//2.1 获取右上角的gid
-	gid = m_pLayer0->getTileGIDAt(Vec2(
-		static_cast<int>(tankBoundingBox.getMaxX() / tileSize.width),
-		static_cast<int>(maxY / tileSize.height)));
-	//log("collision2 gid : %d", gid);
-
-	//2.2 
-	if (func(gid))
-	{
-		return true;
-	}
-
-	//3.1 获取左下角gid
-	gid = m_pLayer0->getTileGIDAt(Vec2(
-		static_cast<int>(tankBoundingBox.getMinX() / tileSize.width),
-		static_cast<int>(minY / tileSize.height)));
-	//log("collision3 gid : %d", gid);
-
-	//3.2
-	if (func(gid))
-	{
-		return true;
-	}
-
-	//4.1 获取右下角gid
-	gid = m_pLayer0->getTileGIDAt(Vec2(
-		static_cast<int>(tankBoundingBox.getMaxX() / tileSize.width),
-		static_cast<int>(minY / tileSize.height)));
-	//log("collision4 gid : %d", gid);
-
-	//4.2
-	if (func(gid))
-	{
-		return true;
-	}
-
-	return false;
-}
 
 #endif
