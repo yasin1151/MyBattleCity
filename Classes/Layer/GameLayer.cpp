@@ -75,8 +75,9 @@ bool GameLayer::init(int roundNum)
 	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("music/start.aif", true);
 
 	//设置背景音乐
-	CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.1f);
-	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.1f);
+	CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0);
+	CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0);
+
 	
 	return true;
 }
@@ -96,6 +97,7 @@ GameLayer::~GameLayer()
 
 void GameLayer::update(float dt)
 {
+	//键盘更新
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	for (auto it : m_listKeyCode)
 	{
@@ -103,12 +105,16 @@ void GameLayer::update(float dt)
 	}
 #endif
 
+	//摇杆更新
 	rockerUpdate(dt);
 
+	//ai更新
 	m_pAIMgr->aiUpdte(this, dt);
 	
+	//碰撞检测
 	m_pAIMgr->collisionUpdate(this, dt);
 
+	//道具更新
 	m_pStageMgr->update(m_pPlayer, dt);
 
 }
@@ -394,14 +400,14 @@ bool GameLayer::initKeyboardEvent()
 
 void GameLayer::LeftCallBack(Ref* ref)
 {
-	log("GameLayer::LeftCallBack");
+	//log("GameLayer::LeftCallBack");
 	m_pPlayer->hanleInput(PlayerLeft, this);
 	m_pPlayer->getTank()->move();
 }
 
 void GameLayer::RightCallBack(Ref* ref)
 {
-	log("GameLayer::RightCallBack");
+	//log("GameLayer::RightCallBack");
 	m_pPlayer->hanleInput(PlayerRight, this);
 	m_pPlayer->getTank()->move();
 
@@ -409,21 +415,21 @@ void GameLayer::RightCallBack(Ref* ref)
 
 void GameLayer::UpCallBack(Ref* ref)
 {
-	log("GameLayer::UpCallBack");
+	//log("GameLayer::UpCallBack");
 	m_pPlayer->hanleInput(PlayerUp, this);
 	m_pPlayer->getTank()->move();
 }
 
 void GameLayer::DownCallBack(Ref* ref)
 {
-	log("GameLayer::DownCallBack");
+	//log("GameLayer::DownCallBack");
 	m_pPlayer->hanleInput(PlayerDown, this);
 	m_pPlayer->getTank()->move();
 }
 
 void GameLayer::ShotCallBack(Ref* ref)
 {
-	log("GameLayer::ShotCallBack");
+	//log("GameLayer::ShotCallBack");
 	m_pPlayer->hanleInput(PlayerShot, this);
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("music/bullet.aif");
 }

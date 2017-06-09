@@ -55,32 +55,32 @@ PlayerState* PlayerState::operator()(size_t type) const
 
 void PlayerStateDown::onEnter(Player& player, cocos2d::Layer* layer)
 {
-	log("down");
+	//log("down");
 	player.getTank()->command(MoveDown);
 }
 
 void PlayerStateUp::onEnter(Player& player, cocos2d::Layer* layer)
 {
 
-	log("up");
+	//log("up");
 	player.getTank()->command(MoveUp);
 }
 
 void PlayerStateRight::onEnter(Player& player, cocos2d::Layer* layer)
 {
 
-	log("right");
+	//log("right");
 	player.getTank()->command(MoveRight);
 }
 
 void PlayerStateLeft::onEnter(Player& player, cocos2d::Layer* layer)
 {
-	log("left");
+	//log("left");
 	player.getTank()->command(MoveLeft);
 }
 
 void PlayerStateShot::onEnter(Player& player, cocos2d::Layer* layer)
 {
-	log("shot");
+	//log("shot");
 	player.getTank()->command(Shot);
 }

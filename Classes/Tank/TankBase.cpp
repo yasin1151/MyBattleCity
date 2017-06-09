@@ -95,17 +95,40 @@ void TankBase::command(const TankCommandType& type)
 	Vec2 offsetPos = Vec2::ZERO;
 
 	//碰撞检测
-	if (m_pMap->isCollision(nextRect, offsetPos))
+	if (m_pMap->isCollision(nextRect, offsetPos, m_tankType >= MineTankA ? true : false, m_spTank->getRotation()))
 	{
-//		if (Vec2::ZERO != offsetPos)
-//		{
-//			m_bIsCanMoved = true;
-//			m_rNextMoveRect = Rect(
-//				nextRect.origin + offsetPos,
-//				nextRect.size
-//				);
-//			return;
-//		}	
+		//如果是我方坦克，则进行位置修正
+		if (MineTankA <= m_tankType && Vec2::ZERO != offsetPos)
+		{
+			Rect box = m_spTank->getBoundingBox();
+
+
+			nextRect = Rect(
+				Vec2(
+				box.getMinX() + static_cast<int>(offsetPos.x) * m_vSpeed.x,
+				box.getMinY() + static_cast<int>(offsetPos.y) * m_vSpeed.y),
+				box.size
+				);
+
+			log("offsetPos : %0.2f , %0.2f ", offsetPos.x, offsetPos.y);
+//
+//			//如果修正后的位置可以走
+//			if (!m_pMap->isCollision(nextRect, offsetPos, false))
+//			{
+//
+//				m_rNextMoveRect = nextRect;
+//				m_bIsCanMoved = true;
+//			}
+//			else
+//			{
+//				m_bIsCanMoved = false;
+//			}
+
+			m_rNextMoveRect = nextRect;
+			m_bIsCanMoved = true;
+
+			return;
+		}	
 
 		m_bIsCanMoved = false;
 		return;

@@ -22,6 +22,9 @@ private:
 	//地图层1
 	TMXLayer* m_pLayer1;
 
+	//去找离指定点最近的位置，返回arrPos中的位置
+	int findMinDisPos(int arrGid[], int iArrSize, int iRota);
+
 public:
 	//确保地图有layer_0 和 layer_1 两个层
 	static TankTiledMap* createWithTmxFile(const std::string& fileName);
@@ -31,8 +34,15 @@ public:
 	//获取瓦片地图对象
 	TMXTiledMap* getTiledMap();
 
-	//检测碰撞，true为碰撞，false为无碰撞，传入一个Vec&， 可以对当前位置进行修正，优化用户体验
-	bool isCollision(const Rect& tankBoundingBox, Vec2& offsetPos);
+	/**
+	*	@brief : 用于碰撞检测
+	*	@param tankBoundingBox : 坦克的碰撞检测盒子
+	*	@param offfsetPos : 用于回传的偏移量，如果isUseOffset为false，则不会回传
+	*	@param isUseOffset : 是否使用偏移量处理
+	*	@param iRota : 当前旋转的方向
+	*	@return : 如果发生碰撞，返回true, 如果未发生碰撞，返回false
+	*/
+	bool isCollision(const Rect& tankBoundingBox, Vec2& offsetPos, bool isUseOffset, int iRota = 0);
 };
 
 
